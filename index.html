@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie Demonstration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .cookie-box {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin: 20px 0;
+            background-color: #f9f9f9;
+        }
+        button {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cookie Demonstration</h1>
+    
+    <div class="cookie-box">
+        <h2>Cookie Value:</h2>
+        <p id="cookieDisplay">No cookie set yet</p>
+        <button onclick="setCookie()">Set Test Cookie</button>
+        <button onclick="displayCookie()">Reload Page & Show Cookie</button>
+    </div>
+    
+    <footer>
+        <p>&copy; <span id="year"></span> - Your Name - Assignment 10</p>
+    </footer>
+
+    <script>
+        // Set copyright year
+        document.getElementById('year').textContent = new Date().getFullYear();
+        
+        // Set a test cookie
+        function setCookie() {
+            const expires = new Date();
+            expires.setTime(expires.getTime() + (24 * 60 * 60 * 1000)); // 1 day
+            document.cookie = `testCookie=This_is_a_test_cookie; expires=${expires.toUTCString()}; path=/`;
+            alert('Cookie has been set! Click "Reload Page & Show Cookie" to view it.');
+        }
+        
+        // Display the cookie value
+        function displayCookie() {
+            const cookies = document.cookie.split(';');
+            let cookieValue = 'No cookie set yet';
+            
+            cookies.forEach(cookie => {
+                const [name, value] = cookie.trim().split('=');
+                if (name === 'testCookie') {
+                    cookieValue = decodeURIComponent(value);
+                }
+            });
+            
+            document.getElementById('cookieDisplay').textContent = cookieValue;
+            location.reload();
+        }
+        
+        // Check for cookie on page load
+        window.onload = function() {
+            displayCookie();
+        };
+    </script>
+</body>
+</html>
